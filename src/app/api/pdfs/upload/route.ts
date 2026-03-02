@@ -4,24 +4,12 @@ import path from "path";
 import { randomUUID } from "crypto";
 import { getSession } from "@/features/auth/session";
 import { insertPdf } from "@/features/pdf-upload/repository";
-import { findById } from "@/features/municipalities/repository";
 
 export async function POST(request: NextRequest) {
   const session = await getSession();
 
   if (!session.municipalityId) {
     return NextResponse.json({ error: "Nicht angemeldet." }, { status: 401 });
-  }
-
-  // Defensiv: municipality_id gegen DB prüfen (fängt stale Sessions ab)
-  const municipality = findById(session.municipalityId);
-  if (!municipality) {
-    // Session veraltet – z.B. nach Container-Neustart mit neuen IDs
-    session.destroy();
-    return NextResponse.json(
-      { error: "Sitzung abgelaufen. Bitte neu einloggen." },
-      { status: 401 }
-    );
   }
 
   const formData = await request.formData();

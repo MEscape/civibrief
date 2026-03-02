@@ -27,7 +27,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Datei zu groß (max. 20 MB)." }, { status: 400 });
   }
 
-  const uploadDir = path.join(process.cwd(), "uploads", session.municipalityId);
+  // DATA_DIR kann via Umgebungsvariable überschrieben werden (Railway Volume)
+  const dataDir = process.env.DATA_DIR ?? process.cwd();
+  const uploadDir = path.join(dataDir, "uploads", session.municipalityId);
   await mkdir(uploadDir, { recursive: true });
 
   const id = randomUUID();

@@ -20,8 +20,9 @@ export async function GET(
     return NextResponse.json({ error: "Nicht gefunden." }, { status: 404 });
   }
 
+  const dataDir = process.env.DATA_DIR ?? process.cwd();
   const filePath = path.join(
-    process.cwd(),
+    dataDir,
     "uploads",
     pdf.municipality_id,
     pdf.filename

@@ -23,7 +23,8 @@ export async function POST(
     return NextResponse.json({ error: "Nicht gefunden." }, { status: 404 });
   }
 
-  const filePath = path.join(process.cwd(), "uploads", session.municipalityId, pdf.filename);
+  const dataDir = process.env.DATA_DIR ?? process.cwd();
+  const filePath = path.join(dataDir, "uploads", session.municipalityId, pdf.filename);
 
   try {
     const text = await extractTextFromPdf(filePath);

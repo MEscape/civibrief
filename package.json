@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npm run db:seed && next start",
     "lint": "eslint",
-    "seed": "npx tsx src/lib/seed.ts"
+    "seed": "npx tsx src/lib/seed.ts",
+    "db:seed": "npx tsx src/lib/seed.ts"
   },
   "dependencies": {
     "@huggingface/inference": "^4.13.14",

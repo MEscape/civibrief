@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "npm run db:seed && next start",
+    "build": "next build && cp -r public .next/standalone/public && cp -r .next/static .next/standalone/.next/static",
+    "start": "npm run db:seed && node .next/standalone/server.js",
     "lint": "eslint",
     "seed": "npx tsx src/lib/seed.ts",
     "db:seed": "npx tsx src/lib/seed.ts"
